@@ -148,3 +148,84 @@
         /* Footer */
         footer {
             margin-top: 100px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            header { flex-direction: column; gap: 20px; }
+            nav a { margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">thomas mihaljevic</div>
+            <nav>
+                <a href="#projects">Projects</a>
+                <a href="#about">About</a>
+                <a href="mailto:thomasmihaljevic27@gmail.com">Contact</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>PROFESSIONAL HOMEPAGE</h1>
+            <p class="subtitle">
+                Master of Arts in Economics Candidate.<br>
+                Exploring economics, sports analytics, and policy.
+            </p>
+        </section>
+
+        <h2 class="section-title" id="projects">Selected Work</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <h3>NHL Trade Efficiency Model</h3>
+                <p>Developing a model to evaluate market inefficiencies in player trades using historical data and regression analysis.</p>
+                <span class="tag">R / Stata</span>
+                <span class="tag">Hockey Analytics</span>
+            </div>
+
+            <div class="card">
+                <h3>Policy Analysis: Northern Ontario</h3>
+                <p>Research on population retention strategies and economic development in the Thunder Bay region.</p>
+                <span class="tag">Economics</span>
+                <span class="tag">Policy</span>
+            </div>
+
+            <div class="card">
+                <h3>Statistical Visualization</h3>
+                <p>Custom graphing scripts for dual-axis economic indicators.</p>
+                <span class="tag">Stata</span>
+                <span class="tag">Data Viz</span>
+            </div>
+
+        </div>
+
+        <h2 class="section-title" id="about">About Me</h2>
+        <div class="about-text">
+            <p>
+                I am a <strong>Master of Arts in Economics</strong> candidate at Lakehead University, focused on applying econometric models to real-world challenges in Northern Ontario. My academic work bridges the gap between raw data and actionable policy, with a specific interest in population retention and regional development.
+            </p>
+            <p>
+                Outside of policy, I apply these same statistical rigors to sports analytics. I am currently developing models to assess trade efficiency in the NHL, exploring the "Process vs. Results" dilemma in rookie player evaluation.
+            </p>
+            <p>
+                When I am not in Stata or Notion, you can find me working on interior design projects or optimizing my home office setup.
+            </p>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Thomas Mihaljevic. Built with GitHub Pages.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
