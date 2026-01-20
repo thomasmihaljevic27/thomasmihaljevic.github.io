@@ -13,42 +13,31 @@
 
     <style>
         :root {
-            /* Your Palette: Green -> Blue -> Orange */
+            /* Palette */
             --bg-color: #0b0c10;
             --surface-color: #1f2833;
             --text-primary: #ffffff;
             --text-secondary: #c5c6c7;
             --border-color: #333;
-            
             --accent-green: #45a247;
             --accent-blue: #283c86;
             --accent-orange: #f15f2a;
-
             --main-gradient: linear-gradient(90deg, #45a247 0%, #283c86 50%, #f15f2a 100%);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Container: Narrower and focused, like a memo or article */
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 
-        /* Header: Simple, utilitarian */
+        /* Header */
         header {
             display: flex;
             justify-content: space-between;
@@ -57,14 +46,20 @@
             margin-bottom: 60px;
         }
 
-        .logo {
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: -0.02em;
+        /* Updated: Logo Link Styling */
+        .logo-link {
+            text-decoration: none;
+            color: inherit;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            transition: opacity 0.2s;
         }
+        
+        .logo-link:hover { opacity: 0.8; }
 
         .logo-dot {
             width: 12px;
@@ -81,36 +76,13 @@
             font-weight: 500;
             transition: color 0.2s;
         }
+        nav a:hover { color: #fff; }
 
-        nav a:hover {
-            color: #fff;
-        }
-
-        /* Hero: Big, Bold, "Manifesto" style */
-        .hero {
-            margin-bottom: 80px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            line-height: 1.1;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-        }
-
-        .gradient-text {
-            background: var(--main-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            font-weight: 400;
-        }
+        /* Hero */
+        .hero { margin-bottom: 80px; }
+        h1 { font-size: 3rem; line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 24px; }
+        .gradient-text { background: var(--main-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { font-size: 1.25rem; color: var(--text-secondary); max-width: 600px; font-weight: 400; }
 
         /* Section Headers */
         h2 {
@@ -121,121 +93,48 @@
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
-            font-family: 'Fira Code', monospace; /* Tech accent */
+            font-family: 'Fira Code', monospace;
         }
 
-        /* The "Build" List Layout */
-        .project-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 80px;
-        }
+        /* Projects */
+        .project-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 80px; }
 
         .project-item {
-            display: flex;
-            align-items: flex-start; /* Align to top for multi-line */
-            gap: 20px;
-            padding: 24px;
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            text-decoration: none;
-            color: inherit;
+            display: flex; align-items: flex-start; gap: 20px; padding: 24px;
+            background: var(--surface-color); border: 1px solid var(--border-color);
+            border-radius: 12px; text-decoration: none; color: inherit;
             transition: transform 0.2s, border-color 0.2s;
         }
+        .project-item:hover { transform: translateY(-2px); border-color: var(--accent-blue); }
 
-        .project-item:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent-blue);
-        }
-
-        .emoji-icon {
-            font-size: 2rem;
-            line-height: 1;
-            flex-shrink: 0;
-            padding-top: 4px;
-        }
-
-        .project-content {
-            flex-grow: 1;
-        }
-
-        .project-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .project-desc {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-        }
-
-        .tags {
-            display: flex;
-            gap: 8px;
-        }
-
+        .emoji-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; padding-top: 4px; }
+        .project-content { flex-grow: 1; }
+        .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; display: block; }
+        .project-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 12px; }
+        .tags { display: flex; gap: 8px; }
         .tag {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 4px;
-            color: var(--accent-green);
+            font-family: 'Fira Code', monospace; font-size: 0.75rem; padding: 4px 8px;
+            background: rgba(0,0,0,0.3); border-radius: 4px; color: var(--accent-green);
         }
 
-        /* About Section */
-        .about-section {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-        }
-
-        .about-section p {
-            margin-bottom: 24px;
-        }
-
-        .highlight {
-            color: #fff;
-            font-weight: 600;
-            text-decoration: underline;
-            text-decoration-color: var(--accent-orange);
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 100px;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            color: #555;
-            font-size: 0.9rem;
-            font-family: 'Fira Code', monospace;
-        }
-
-        /* Mobile */
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .project-item { padding: 20px; }
-            .emoji-icon { font-size: 1.5rem; }
-        }
+        /* Footer & About */
+        .about-section { font-size: 1.1rem; line-height: 1.7; color: var(--text-secondary); }
+        .about-section p { margin-bottom: 24px; }
+        .highlight { color: #fff; font-weight: 600; text-decoration: underline; text-decoration-color: var(--accent-orange); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+        
+        footer { margin-top: 100px; padding: 40px 0; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; color: #555; font-size: 0.9rem; font-family: 'Fira Code', monospace; }
+        
+        @media (max-width: 600px) { h1 { font-size: 2.2rem; } footer { flex-direction: column; gap: 15px; } }
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <div class="logo">
+            <a href="/" class="logo-link">
                 <div class="logo-dot"></div>
                 THOMAS MIHALJEVIC
-            </div>
+            </a>
             <nav>
                 <a href="#work">Work</a>
                 <a href="#about">About</a>
@@ -256,7 +155,7 @@
         <h2 id="work">My Work</h2>
         <div class="project-list">
             
-            <a href="#" class="project-item">
+            <a href="nhl-trade-model/" class="project-item">
                 <div class="emoji-icon">🏒</div>
                 <div class="project-content">
                     <span class="project-title">NHL Trade Efficiency Model</span>
@@ -268,7 +167,7 @@
                 </div>
             </a>
             
-<a href="housing-paper.html" class="project-item">
+            <a href="housing-paper/" class="project-item">
                 <div class="emoji-icon">🏠</div>
                 <div class="project-content">
                     <span class="project-title">Housing Paper</span>
@@ -280,7 +179,7 @@
                 </div>
             </a>
             
-            <a href="#" class="project-item">
+            <a href="northern-ontario/" class="project-item">
                 <div class="emoji-icon">🏗️</div>
                 <div class="project-content">
                     <span class="project-title">Building Northern Ontario</span>
@@ -292,7 +191,7 @@
                 </div>
             </a>
 
-            <a href="#" class="project-item">
+            <a href="statistical-viz/" class="project-item">
                 <div class="emoji-icon">📈</div>
                 <div class="project-content">
                     <span class="project-title">Statistical Visualization</span>
@@ -319,7 +218,7 @@
             </p>
         </div>
 
-<footer>
+        <footer>
             <span style="display: flex; align-items: center; gap: 8px;">
                 Thunder Bay, ON 
                 <img src="https://flagcdn.com/ca.svg" alt="Canada Flag" style="height: 14px;">
