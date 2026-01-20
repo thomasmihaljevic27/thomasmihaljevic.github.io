@@ -3,19 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thomas Mihaljevic</title>
+    <title>Thomas Mihaljevic | Building Canada</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2345a247'/><stop offset='50%25' stop-color='%23283c86'/><stop offset='100%25' stop-color='%23f15f2a'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/></svg>" type="image/svg+xml">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            /* Theme Colors: Green -> Blue -> Orange */
+            /* Your Palette: Green -> Blue -> Orange */
             --bg-color: #0b0c10;
-            --card-bg: #1f2833;
-            --text-main: #c5c6c7;
-            --text-highlight: #66fcf1;
+            --surface-color: #1f2833;
+            --text-primary: #ffffff;
+            --text-secondary: #c5c6c7;
+            --border-color: #333;
             
-            /* The Gradient */
+            --accent-green: #45a247;
+            --accent-blue: #283c86;
+            --accent-orange: #f15f2a;
+
             --main-gradient: linear-gradient(90deg, #45a247 0%, #283c86 50%, #f15f2a 100%);
         }
 
@@ -27,139 +35,196 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Fira Code', 'Courier New', Courier, monospace; /* Monospace for the Math/Tech vibe */
-            line-height: 1.6;
-            padding: 20px;
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Container to center content */
+        /* Container: Narrower and focused, like a memo or article */
         .container {
-            max-width: 900px;
+            max-width: 720px;
             margin: 0 auto;
+            padding: 0 24px;
         }
 
-        /* Header / Nav */
+        /* Header: Simple, utilitarian */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 40px 0;
-            border-bottom: 1px solid #333;
+            margin-bottom: 60px;
         }
 
         .logo {
-            font-weight: bold;
-            font-size: 1.5rem;
-            letter-spacing: -1px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--main-gradient);
         }
 
         nav a {
-            color: var(--text-main);
+            color: var(--text-secondary);
             text-decoration: none;
-            margin-left: 20px;
-            font-size: 0.9rem;
-            transition: color 0.3s;
+            margin-left: 24px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
         }
 
         nav a:hover {
             color: #fff;
-            text-decoration: underline;
         }
 
-        /* Hero Section */
+        /* Hero: Big, Bold, "Manifesto" style */
         .hero {
-            padding: 80px 0;
-            text-align: left;
+            margin-bottom: 80px;
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .gradient-text {
             background: var(--main-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: inline-block;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: #888;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
             max-width: 600px;
+            font-weight: 400;
         }
 
-        /* Section Styling */
-        .section-title {
-            margin-top: 80px;
-            margin-bottom: 30px;
-            font-size: 1.5rem;
-            border-left: 4px solid #283c86; /* Blue accent */
-            padding-left: 15px;
+        /* Section Headers */
+        h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            font-family: 'Fira Code', monospace; /* Tech accent */
         }
 
-        /* Projects Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* The "Build" List Layout */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 80px;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: flex-start; /* Align to top for multi-line */
             gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid #333;
+            padding: 24px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
             transition: transform 0.2s, border-color 0.2s;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #f15f2a; /* Orange hover effect */
+        .project-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
         }
 
-        .card h3 {
-            margin-bottom: 10px;
-            color: #fff;
+        .emoji-icon {
+            font-size: 2rem;
+            line-height: 1;
+            flex-shrink: 0;
+            padding-top: 4px;
         }
 
-        .card .tag {
-            display: inline-block;
+        .project-content {
+            flex-grow: 1;
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag {
+            font-family: 'Fira Code', monospace;
             font-size: 0.75rem;
             padding: 4px 8px;
-            margin-top: 15px;
-            margin-right: 5px;
-            background: #000;
-            color: #45a247; /* Green text for code tags */
+            background: rgba(0,0,0,0.3);
             border-radius: 4px;
+            color: var(--accent-green);
         }
 
-        /* About Section */
-        .about-text {
+        /* About / Manifesto Section */
+        .about-section {
             font-size: 1.1rem;
-            color: #aeb0b2;
-            max-width: 800px;
-            line-height: 1.8;
+            line-height: 1.7;
+            color: var(--text-secondary);
         }
-        
-        .about-text p {
-            margin-bottom: 20px;
+
+        .about-section p {
+            margin-bottom: 24px;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-orange);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
         }
 
         /* Footer */
         footer {
             margin-top: 100px;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-            text-align: center;
-            font-size: 0.8rem;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
             color: #555;
+            font-size: 0.9rem;
+            font-family: 'Fira Code', monospace;
         }
 
-        /* Mobile Adjustments */
+        /* Mobile */
         @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            header { flex-direction: column; gap: 20px; }
-            nav a { margin: 0 10px; }
+            h1 { font-size: 2.2rem; }
+            .project-item { padding: 20px; }
+            .emoji-icon { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -167,60 +232,84 @@
 
     <div class="container">
         <header>
-            <div class="logo">thomas mihaljevic</div>
+            <div class="logo">
+                <div class="logo-dot"></div>
+                THOMAS MIHALJEVIC
+            </div>
             <nav>
-                <a href="#projects">Projects</a>
-                <a href="#about">About</a>
+                <a href="#work">Work</a>
+                <a href="#manifesto">About</a>
                 <a href="mailto:thomasmihaljevic27@gmail.com">Contact</a>
             </nav>
         </header>
 
         <section class="hero">
-            <h1>PROFESSIONAL HOMEPAGE</h1>
+            <h1>
+                I use data to <span class="gradient-text">build better policy</span> and efficient systems.
+            </h1>
             <p class="subtitle">
-                Master of Arts in Economics Candidate.<br>
-                Exploring economics, sports analytics, and policy.
+                Master of Arts in Economics Candidate at Lakehead University. 
+                Focused on Northern Ontario development, housing supply, and sports analytics.
             </p>
         </section>
 
-        <h2 class="section-title" id="projects">Selected Work</h2>
-        <div class="grid">
+        <h2 id="work">Selected Initiatives</h2>
+        <div class="project-list">
             
-            <div class="card">
-                <h3>NHL Trade Efficiency Model</h3>
-                <p>Developing a model to evaluate market inefficiencies in player trades using historical data and regression analysis.</p>
-                <span class="tag">R / Stata</span>
-                <span class="tag">Hockey Analytics</span>
-            </div>
+            <a href="#" class="project-item">
+                <div class="emoji-icon">🏒</div>
+                <div class="project-content">
+                    <span class="project-title">NHL Trade Efficiency Model</span>
+                    <p class="project-desc">Quantifying market inefficiencies in player trades using historical data. Evaluating the "Process vs. Results" dilemma in rookie development.</p>
+                    <div class="tags">
+                        <span class="tag">R/Stata</span>
+                        <span class="tag">Analytics</span>
+                    </div>
+                </div>
+            </a>
 
-            <div class="card">
-                <h3>Policy Analysis: Northern Ontario</h3>
-                <p>Research on population retention strategies and economic development in the Thunder Bay region.</p>
-                <span class="tag">Economics</span>
-                <span class="tag">Policy</span>
-            </div>
+            <a href="#" class="project-item">
+                <div class="emoji-icon">🏗️</div>
+                <div class="project-content">
+                    <span class="project-title">Building Northern Ontario</span>
+                    <p class="project-desc">Policy research on population retention strategies and economic development for the Thunder Bay region.</p>
+                    <div class="tags">
+                        <span class="tag">Policy</span>
+                        <span class="tag">Economics</span>
+                    </div>
+                </div>
+            </a>
 
-            <div class="card">
-                <h3>Statistical Visualization</h3>
-                <p>Custom graphing scripts for dual-axis economic indicators.</p>
-                <span class="tag">Stata</span>
-                <span class="tag">Data Viz</span>
-            </div>
+            <a href="#" class="project-item">
+                <div class="emoji-icon">📈</div>
+                <div class="project-content">
+                    <span class="project-title">Statistical Visualization</span>
+                    <p class="project-desc">Custom graphing scripts for dual-axis economic indicators and visual data storytelling.</p>
+                    <div class="tags">
+                        <span class="tag">Data Viz</span>
+                        <span class="tag">Code</span>
+                    </div>
+                </div>
+            </a>
 
         </div>
 
-        <h2 class="section-title" id="about">About Me</h2>
-        <div class="about-text">
+        <h2 id="manifesto">The Approach</h2>
+        <div class="about-section">
             <p>
-                I am a <strong>Master of Arts in Economics</strong> candidate at Lakehead University, focused on applying econometric models to real-world public policy challenges in Canada.
+                Canada needs more than just good intentions; it needs <span class="highlight">rigorous analysis</span> and the courage to build.
             </p>
             <p>
-                Outside of policy, I apply that same statistical mindset to sports. I am currently developing models to assess trade efficiency in the NHL.
+                I am an economist in training, applying statistical models to real-world challenges. Whether it is optimizing housing policy for Northern Ontario or analyzing trade value in the NHL, my work is driven by the belief that better data leads to better decisions.
+            </p>
+            <p>
+                When I am not in Stata or Notion, I am working on interior design projects or optimizing my workspace. I believe in <strong>abundance</strong>—in housing, in talent, and in opportunity.
             </p>
         </div>
 
         <footer>
-            <p>&copy; 2026 Thomas Mihaljevic. Built with GitHub Pages.</p>
+            <span>Thunder Bay, ON 🇨🇦</span>
+            <span>&copy; 2026</span>
         </footer>
     </div>
 
