@@ -12,26 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        .social-links {
-    display: flex;
-    gap: 16px;
-    margin-top: 28px;
-}
-
-.social-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.social-link:hover { color: #fff; }
         :root {
-            /* Palette */
             --bg-color: #0b0c10;
             --surface-color: #1f2833;
             --text-primary: #ffffff;
@@ -64,7 +45,6 @@
             margin-bottom: 60px;
         }
 
-        /* Updated: Logo Link Styling */
         .logo-link {
             text-decoration: none;
             color: inherit;
@@ -76,7 +56,6 @@
             letter-spacing: -0.02em;
             transition: opacity 0.2s;
         }
-        
         .logo-link:hover { opacity: 0.8; }
 
         .logo-dot {
@@ -101,22 +80,25 @@
         h1 { font-size: 3rem; line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 24px; }
         .gradient-text { background: var(--main-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .subtitle { font-size: 1.25rem; color: var(--text-secondary); max-width: 600px; font-weight: 400; }
-        <div class="social-links">
-    <a href="https://linkedin.com/in/YOUR_HANDLE" target="_blank" class="social-link">
-        <!-- LinkedIn SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-        </svg>
-        LinkedIn
-    </a>
-    <a href="https://github.com/thomasmihaljevic27" target="_blank" class="social-link">
-        <!-- GitHub SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-        </svg>
-        GitHub
-    </a>
-</div>
+
+        /* Social links in hero */
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .social-link:hover { color: #fff; }
 
         /* Section Headers */
         h2 {
@@ -145,28 +127,68 @@
         .project-content { flex-grow: 1; }
         .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; display: block; }
         .project-desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 12px; }
-        .tag {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.75rem;
-    padding: 4px 12px;           /* slightly wider */
-    background: rgba(0,0,0,0.3);
-    border-radius: 999px;        /* ← pill shape */
-    color: var(--accent-green);
-    border: 1px solid rgba(69, 162, 71, 0.25); /* subtle green border */
-}
 
-        /* Footer & About */
+        /* Tag pills */
+        .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 999px;
+            color: var(--accent-green);
+            border: 1px solid rgba(69, 162, 71, 0.25);
+        }
+
+        /* About */
         .about-section { font-size: 1.1rem; line-height: 1.7; color: var(--text-secondary); }
         .about-section p { margin-bottom: 24px; }
-        .highlight { color: #fff; font-weight: 600; text-decoration: underline; text-decoration-color: var(--accent-orange); text-decoration-thickness: 2px; text-underline-offset: 4px; }
-        
-        footer { margin-top: 100px; padding: 40px 0; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; color: #555; font-size: 0.9rem; font-family: 'Fira Code', monospace; }
-        
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-orange);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 100px;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #555;
+            font-size: 0.9rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .footer-social-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #555;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            transition: color 0.2s;
+        }
+        .footer-social-link:hover { color: var(--text-secondary); }
+
         @media (max-width: 600px) {
-    h1 { font-size: 2.2rem; }
-    footer { flex-direction: column; gap: 15px; }
-    header { flex-direction: column; gap: 20px; } /* ← ADD THIS */
-}
+            h1 { font-size: 2.2rem; }
+            header { flex-direction: column; gap: 20px; }
+            footer { flex-direction: column; gap: 15px; }
+            .footer-social { gap: 12px; }
+        }
     </style>
 </head>
 <body>
@@ -192,6 +214,20 @@
                 Master of Arts in Economics Candidate at Lakehead University. 
                 Focused on Northern Ontario development, housing supply, and sports analytics.
             </p>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/thomas-mihaljevic" target="_blank" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/thomasmihaljevic27" target="_blank" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
         </section>
 
         <h2 id="work">My Work</h2>
@@ -249,22 +285,38 @@
 
         <h2 id="about">About Me</h2>
         <div class="about-section">
-    <p>
-        Canada needs more than good intentions; it needs <strong>focused analysis</strong> and the courage to build.
-    </p>
-    <p>
-        I am an economist in training, applying statistical methods to real-world challenges in housing, regional development, and sports markets. My work sits at the intersection of <span class="highlight">econometrics</span>, <span class="highlight">public policy</span>, and <span class="highlight">applied data analysis</span>.
-    </p>
-    <p>
-        I believe in <strong>abundance</strong>—in housing, in talent, and in opportunity.
-    </p>
-</div>
+            <p>
+                Canada needs more than good intentions; it needs <strong>focused analysis</strong> and the courage to build.
+            </p>
+            <p>
+                I am an economist in training, applying statistical methods to real-world challenges in housing, regional development, and sports markets. My work sits at the intersection of <span class="highlight">econometrics</span>, <span class="highlight">public policy</span>, and <span class="highlight">applied data analysis</span>.
+            </p>
+            <p>
+                I believe in <strong>abundance</strong>—in housing, in talent, and in opportunity.
+            </p>
+        </div>
 
         <footer>
             <span style="display: flex; align-items: center; gap: 8px;">
                 Thunder Bay, ON 
                 <img src="https://flagcdn.com/ca.svg" alt="Canada Flag" style="height: 14px;">
             </span>
+
+            <span class="footer-social">
+                <a href="https://linkedin.com/in/thomas-mihaljevic" target="_blank" class="footer-social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/thomasmihaljevic27" target="_blank" class="footer-social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                    GitHub
+                </a>
+            </span>
+
             <span id="last-updated"></span>
         </footer>
     </div>
