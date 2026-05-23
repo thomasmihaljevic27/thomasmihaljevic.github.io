@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanctions Evasion | Thomas Mihaljevic</title>
-    
+
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2345a247'/><stop offset='50%25' stop-color='%23283c86'/><stop offset='100%25' stop-color='%23f15f2a'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g)'/></svg>" type="image/svg+xml">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
@@ -89,6 +89,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
@@ -97,7 +98,19 @@
             text-decoration: none;
             font-family: 'Fira Code', monospace;
             font-size: 0.9rem;
+            white-space: nowrap;
         }
+        .back-link:hover { opacity: 0.8; }
+
+        .page-indicator {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .page-indicator.visible { opacity: 1; }
 
         .download-btn {
             background: var(--accent-blue);
@@ -107,18 +120,86 @@
             border-radius: 4px;
             font-size: 0.85rem;
             transition: opacity 0.2s;
+            white-space: nowrap;
         }
         .download-btn:hover { opacity: 0.8; }
 
-        .pdf-frame {
+        /* PDF Viewer */
+        .pdf-viewer {
+            position: relative;
             width: 100%;
             flex-grow: 1;
             min-height: 60vh;
-            border: 1px solid #333;
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            background: #1f2833;
+            background: #14181f;
+            padding: 24px 16px;
             margin-bottom: 60px;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
+
+        /* Slim themed scrollbar */
+        .pdf-viewer::-webkit-scrollbar { width: 10px; }
+        .pdf-viewer::-webkit-scrollbar-track { background: transparent; }
+        .pdf-viewer::-webkit-scrollbar-thumb {
+            background: #2c3340;
+            border-radius: 999px;
+            border: 2px solid #14181f;
+        }
+        .pdf-viewer::-webkit-scrollbar-thumb:hover { background: #3a4250; }
+
+        .pdf-page {
+            display: block;
+            margin: 0 auto 16px auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            background: #fff;
+            animation: fadeInPage 0.4s ease both;
+        }
+        .pdf-page:last-child { margin-bottom: 0; }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading + error states */
+        .pdf-status {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            text-align: center;
+            padding: 24px;
+        }
+        .pdf-status.hidden { display: none; }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #45a247, #283c86, #f15f2a, #45a247);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
+                    mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .pdf-status-text {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .pdf-status-text a { color: var(--accent-green); }
 
         /* Footer */
         footer {
@@ -151,11 +232,12 @@
         }
         .footer-social-link:hover { color: var(--text-secondary); }
 
-        @media (max-width: 600px) { 
+        @media (max-width: 600px) {
             header { flex-direction: column; gap: 20px; }
             footer { flex-direction: column; gap: 15px; }
             .footer-social { gap: 12px; }
-            .pdf-frame { min-height: 60vh; }
+            .pdf-viewer { padding: 12px 8px; max-height: none; }
+            .page-indicator { display: none; }
         }
     </style>
 </head>
@@ -176,18 +258,21 @@
 
         <div class="pdf-controls">
             <a href="/" class="back-link">← Back to Projects</a>
+            <span class="page-indicator" id="page-indicator"></span>
             <a href="../Sanctions.pdf" class="download-btn" download>Download PDF</a>
         </div>
 
-        <iframe 
-            src="../Sanctions.pdf" 
-            class="pdf-frame" 
-            title="Economic Sanctions Evasion: A Literature Review Case Study">
-        </iframe>
+        <!-- PDF.js renders pages into this scroll container -->
+        <div class="pdf-viewer" id="pdf-viewer" aria-label="Economic Sanctions Evasion: A Literature Review Case Study">
+            <div class="pdf-status" id="pdf-status">
+                <div class="spinner"></div>
+                <div class="pdf-status-text">Loading paper…</div>
+            </div>
+        </div>
 
         <footer>
             <span style="display: flex; align-items: center; gap: 8px;">
-                Thunder Bay, ON 
+                Thunder Bay, ON
                 <img src="https://flagcdn.com/ca.svg" alt="Canada Flag" style="height: 14px;">
             </span>
 
@@ -210,10 +295,112 @@
         </footer>
     </div>
 
+    <!-- PDF.js (Mozilla) loaded from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
+        // --- Config: the only line that changes per-page is the PDF path ---
+        const PDF_URL = "../Sanctions.pdf";
+
+        const viewerEl    = document.getElementById("pdf-viewer");
+        const statusEl    = document.getElementById("pdf-status");
+        const indicatorEl = document.getElementById("page-indicator");
+
+        // Show a fallback message with a direct link if anything goes wrong.
+        function showError() {
+            statusEl.classList.remove("hidden");
+            statusEl.innerHTML =
+                '<div class="pdf-status-text">Couldn\'t render the PDF inline. ' +
+                '<a href="' + PDF_URL + '" target="_blank" rel="noopener">Open it in a new tab</a> instead.</div>';
+        }
+
+        // pdf.js needs its worker script; if the library failed to load, bail to fallback.
+        if (!window.pdfjsLib) {
+            showError();
+        } else {
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+            let pdfDoc = null;
+            let renderToken = 0; // invalidates stale re-renders triggered by fast resizes
+
+            // Cap device pixel ratio at 2 so big phones don't allocate huge canvases.
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            // Render every page as a canvas, sized to the viewer's current width.
+            async function renderAll() {
+                const token = ++renderToken;
+                // Available CSS width = viewer width minus its horizontal padding.
+                const style = getComputedStyle(viewerEl);
+                const padX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+                const cssWidth = viewerEl.clientWidth - padX;
+
+                // Clear any previously rendered canvases (keeps the status node).
+                viewerEl.querySelectorAll("canvas.pdf-page").forEach(c => c.remove());
+
+                for (let num = 1; num <= pdfDoc.numPages; num++) {
+                    const page = await pdfDoc.getPage(num);
+                    if (token !== renderToken) return; // a newer render started; abandon this one
+
+                    // Scale page so its width matches the container, then multiply by dpr for sharpness.
+                    const baseViewport = page.getViewport({ scale: 1 });
+                    const cssScale     = cssWidth / baseViewport.width;
+                    const viewport     = page.getViewport({ scale: cssScale * dpr });
+
+                    const canvas = document.createElement("canvas");
+                    canvas.className = "pdf-page";
+                    canvas.dataset.page = num;
+                    canvas.width  = Math.floor(viewport.width);
+                    canvas.height = Math.floor(viewport.height);
+                    // CSS size is the logical (pre-dpr) size so it lays out at container width.
+                    canvas.style.width  = (viewport.width / dpr) + "px";
+                    canvas.style.height = (viewport.height / dpr) + "px";
+
+                    viewerEl.appendChild(canvas);
+                    await page.render({
+                        canvasContext: canvas.getContext("2d"),
+                        viewport: viewport
+                    }).promise;
+
+                    if (num === 1) statusEl.classList.add("hidden"); // hide spinner once first page paints
+                }
+
+                if (token === renderToken) setupPageTracking();
+            }
+
+            // Update the "Page X / N" indicator based on which canvas is most in view.
+            function setupPageTracking() {
+                indicatorEl.classList.add("visible");
+                const total = pdfDoc.numPages;
+                const update = () => {
+                    const mid = viewerEl.scrollTop + viewerEl.clientHeight / 2;
+                    let current = 1, offset = 0;
+                    viewerEl.querySelectorAll("canvas.pdf-page").forEach(c => {
+                        if (offset <= mid) current = parseInt(c.dataset.page, 10);
+                        offset += c.offsetHeight + 16; // 16px = page bottom margin
+                    });
+                    indicatorEl.textContent = "Page " + current + " / " + total;
+                };
+                viewerEl.addEventListener("scroll", update, { passive: true });
+                update();
+            }
+
+            // Debounce re-rendering on resize / orientation change so canvases stay crisp.
+            let resizeTimer;
+            window.addEventListener("resize", () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => { if (pdfDoc) renderAll(); }, 250);
+            });
+
+            pdfjsLib.getDocument(PDF_URL).promise
+                .then(doc => { pdfDoc = doc; return renderAll(); })
+                .catch(showError);
+        }
+
+        // Footer "last updated" stamp (unchanged from the rest of the site).
         const date = new Date(document.lastModified);
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('last-updated').textContent = "Last updated: " + date.toLocaleDateString('en-CA', options);
+        document.getElementById('last-updated').textContent =
+            "Last updated: " + date.toLocaleDateString('en-CA', options);
     </script>
 
 </body>
