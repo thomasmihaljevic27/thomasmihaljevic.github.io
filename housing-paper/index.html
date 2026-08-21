@@ -1,407 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Housing Crisis & Zoning | Thomas Mihaljevic</title>
-
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2345a247'/><stop offset='50%25' stop-color='%23283c86'/><stop offset='100%25' stop-color='%23f15f2a'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g)'/></svg>" type="image/svg+xml">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-color: #0b0c10;
-            --surface-color: #1f2833;
-            --text-primary: #ffffff;
-            --text-secondary: #c5c6c7;
-            --border-color: #333;
-            --accent-green: #45a247;
-            --accent-blue: #283c86;
-            --accent-orange: #f15f2a;
-            --main-gradient: linear-gradient(90deg, #45a247 0%, #283c86 50%, #f15f2a 100%);
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 24px;
-            width: 100%;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 0;
-            margin-bottom: 40px;
-        }
-
-        .logo-link {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: -0.02em;
-            transition: opacity 0.2s;
-        }
-        .logo-link:hover { opacity: 0.8; }
-
-        .logo-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--main-gradient);
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            margin-left: 24px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        nav a:hover { color: #fff; }
-
-        /* PDF Controls */
-        .pdf-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .back-link {
-            color: var(--accent-green);
-            text-decoration: none;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-        .back-link:hover { opacity: 0.8; }
-
-        .page-indicator {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            letter-spacing: 0.02em;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .page-indicator.visible { opacity: 1; }
-
-        .download-btn {
-            background: var(--accent-blue);
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            transition: opacity 0.2s;
-            white-space: nowrap;
-        }
-        .download-btn:hover { opacity: 0.8; }
-
-        /* PDF Viewer */
-        .pdf-viewer {
-            position: relative;
-            width: 100%;
-            flex-grow: 1;
-            min-height: 60vh;
-            max-height: calc(100vh - 60px);
-            overflow-y: auto;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: #14181f;
-            padding: 24px 16px;
-            margin-bottom: 60px;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Slim themed scrollbar */
-        .pdf-viewer::-webkit-scrollbar { width: 10px; }
-        .pdf-viewer::-webkit-scrollbar-track { background: transparent; }
-        .pdf-viewer::-webkit-scrollbar-thumb {
-            background: #2c3340;
-            border-radius: 999px;
-            border: 2px solid #14181f;
-        }
-        .pdf-viewer::-webkit-scrollbar-thumb:hover { background: #3a4250; }
-
-        .pdf-page {
-            display: block;
-            margin: 0 auto 16px auto;
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-            background: #fff;
-            animation: fadeInPage 0.4s ease both;
-        }
-        .pdf-page:last-child { margin-bottom: 0; }
-
-        @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(8px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Loading + error states */
-        .pdf-status {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 18px;
-            text-align: center;
-            padding: 24px;
-        }
-        .pdf-status.hidden { display: none; }
-
-        .spinner {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, #45a247, #283c86, #f15f2a, #45a247);
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
-                    mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 0);
-            animation: spin 0.9s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .pdf-status-text {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        .pdf-status-text a { color: var(--accent-green); }
-
-        /* Footer */
-        footer {
-            margin-top: auto;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #555;
-            font-size: 0.9rem;
-            font-family: 'Fira Code', monospace;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .footer-social-link {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #555;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-family: 'Fira Code', monospace;
-            transition: color 0.2s;
-        }
-        .footer-social-link:hover { color: var(--text-secondary); }
-
-        @media (max-width: 600px) {
-            header { flex-direction: column; gap: 20px; }
-            footer { flex-direction: column; gap: 15px; }
-            .footer-social { gap: 12px; }
-            .pdf-viewer { padding: 12px 8px; max-height: none; }
-            .page-indicator { display: none; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sanctions Evasion and Economic Coercion — Thomas Mihaljevic</title>
+<meta name="description" content="A game-theory model of third-party intermediaries in sanctions evasion, with Russia after 2022 as a case study.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-    <div class="container">
-        <header>
-            <a href="/" class="logo-link">
-                <div class="logo-dot"></div>
-                THOMAS MIHALJEVIC
-            </a>
-            <nav>
-                <a href="/#work">Work</a>
-                <a href="/#about">About</a>
-                <a href="/contact/">Contact</a>
-            </nav>
-        </header>
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="name" href="/">Thomas Mihaljevic</a>
+    <nav>
+      <a href="/#experience">Experience</a>
+      <a href="/#research">Research</a>
+      <a href="/#skills" class="hide-sm">Skills</a>
+      <a href="/#contact">Contact</a>
+      <a href="/Thomas_Mihaljevic_Resume.pdf" class="cv">CV</a>
+    </nav>
+  </div>
+</div>
 
-        <div class="pdf-controls">
-            <a href="/" class="back-link">← Back to Projects</a>
-            <span class="page-indicator" id="page-indicator"></span>
-            <a href="../Housing_Paper.pdf" class="download-btn" download>Download PDF</a>
-        </div>
+<div class="wrap">
+<main id="main">
 
-        <!-- PDF.js renders pages into this scroll container -->
-        <div class="pdf-viewer" id="pdf-viewer" aria-label="Opinion: To Fix the Housing Crisis">
-            <div class="pdf-status" id="pdf-status">
-                <div class="spinner"></div>
-                <div class="pdf-status-text">Loading paper…</div>
-            </div>
-        </div>
+  <div class="row paper-head">
+    <div class="marker">Paper</div>
+    <div>
+      <a class="back" href="/#research">← Research and projects</a>
+      <h1>Sanctions Evasion and Economic Coercion</h1>
+      <p class="standfirst">A game-theory model of how and why third-party intermediaries help sanctioned states evade enforcement, using Russia after 2022 as a case study. Identifies the conditions under which evasion becomes rational and where enforcement can realistically deter it.</p>
 
-        <footer>
-            <span style="display: flex; align-items: center; gap: 8px;">
-                Thunder Bay, ON
-                <img src="https://flagcdn.com/ca.svg" alt="Canada Flag" style="height: 14px;">
-            </span>
+      <dl class="paper-meta">
+        <div><dt>Course</dt><dd>Economics of Defence</dd></div>
+        <div><dt>Year</dt><dd>2026</dd></div>
+        <div><dt>Methods</dt><dd>Game theory, case study</dd></div>
+      </dl>
 
-            <span class="footer-social">
-                <a href="https://linkedin.com/in/tmihalje" target="_blank" class="footer-social-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                    LinkedIn
-                </a>
-                <a href="https://github.com/thomasmihaljevic27" target="_blank" class="footer-social-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                    </svg>
-                    GitHub
-                </a>
-            </span>
-
-            <span id="last-updated"></span>
-        </footer>
+      <div class="links">
+        <a href="/Sanctions.pdf">Download PDF</a>
+      </div>
     </div>
+  </div>
 
-    <!-- PDF.js (Mozilla) loaded from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script>
-        // --- Config: the only line that changes per-page is the PDF path ---
-        const PDF_URL = "../Housing_Paper.pdf";
+  <div class="viewer-bar">
+    <span>Sanctions Evasion and Economic Coercion</span>
+    <span id="page-count"></span>
+  </div>
 
-        const viewerEl    = document.getElementById("pdf-viewer");
-        const statusEl    = document.getElementById("pdf-status");
-        const indicatorEl = document.getElementById("page-indicator");
+  <div id="viewer" data-pdf="/Sanctions.pdf">
+    <p class="viewer-status" id="viewer-status">Loading paper…</p>
+  </div>
 
-        // Show a fallback message with a direct link if anything goes wrong.
-        function showError() {
-            statusEl.classList.remove("hidden");
-            statusEl.innerHTML =
-                '<div class="pdf-status-text">Couldn\'t render the PDF inline. ' +
-                '<a href="' + PDF_URL + '" target="_blank" rel="noopener">Open it in a new tab</a> instead.</div>';
-        }
+</main>
+<footer>tmihalje.com · Thunder Bay, Ontario</footer>
+</div>
 
-        // pdf.js needs its worker script; if the library failed to load, bail to fallback.
-        if (!window.pdfjsLib) {
-            showError();
-        } else {
-            pdfjsLib.GlobalWorkerOptions.workerSrc =
-                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-            let pdfDoc = null;
-            let renderToken = 0; // invalidates stale re-renders triggered by fast resizes
-
-            // Cap device pixel ratio at 2 so big phones don't allocate huge canvases.
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-            // Render every page as a canvas, sized to the viewer's current width.
-            async function renderAll() {
-                const token = ++renderToken;
-                // Available CSS width = viewer width minus its horizontal padding.
-                const style = getComputedStyle(viewerEl);
-                const padX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
-                const cssWidth = viewerEl.clientWidth - padX;
-
-                // Clear any previously rendered canvases (keeps the status node).
-                viewerEl.querySelectorAll("canvas.pdf-page").forEach(c => c.remove());
-
-                for (let num = 1; num <= pdfDoc.numPages; num++) {
-                    const page = await pdfDoc.getPage(num);
-                    if (token !== renderToken) return; // a newer render started; abandon this one
-
-                    // Scale page so its width matches the container, then multiply by dpr for sharpness.
-                    const baseViewport = page.getViewport({ scale: 1 });
-                    const cssScale     = cssWidth / baseViewport.width;
-                    const viewport     = page.getViewport({ scale: cssScale * dpr });
-
-                    const canvas = document.createElement("canvas");
-                    canvas.className = "pdf-page";
-                    canvas.dataset.page = num;
-                    canvas.width  = Math.floor(viewport.width);
-                    canvas.height = Math.floor(viewport.height);
-                    // CSS size is the logical (pre-dpr) size so it lays out at container width.
-                    canvas.style.width  = (viewport.width / dpr) + "px";
-                    canvas.style.height = (viewport.height / dpr) + "px";
-
-                    viewerEl.appendChild(canvas);
-                    await page.render({
-                        canvasContext: canvas.getContext("2d"),
-                        viewport: viewport
-                    }).promise;
-
-                    if (num === 1) statusEl.classList.add("hidden"); // hide spinner once first page paints
-                }
-
-                if (token === renderToken) setupPageTracking();
-            }
-
-            // Update the "Page X / N" indicator based on which canvas is most in view.
-            function setupPageTracking() {
-                indicatorEl.classList.add("visible");
-                const total = pdfDoc.numPages;
-                const update = () => {
-                    const mid = viewerEl.scrollTop + viewerEl.clientHeight / 2;
-                    let current = 1, offset = 0;
-                    viewerEl.querySelectorAll("canvas.pdf-page").forEach(c => {
-                        if (offset <= mid) current = parseInt(c.dataset.page, 10);
-                        offset += c.offsetHeight + 16; // 16px = page bottom margin
-                    });
-                    indicatorEl.textContent = "Page " + current + " / " + total;
-                };
-                viewerEl.addEventListener("scroll", update, { passive: true });
-                update();
-            }
-
-            // Debounce re-rendering on resize / orientation change so canvases stay crisp.
-            let resizeTimer;
-            window.addEventListener("resize", () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => { if (pdfDoc) renderAll(); }, 250);
-            });
-
-            pdfjsLib.getDocument(PDF_URL).promise
-                .then(doc => { pdfDoc = doc; return renderAll(); })
-                .catch(showError);
-        }
-
-        // Footer "last updated" stamp (unchanged from the rest of the site).
-        const date = new Date(document.lastModified);
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('last-updated').textContent =
-            "Last updated: " + date.toLocaleDateString('en-CA', options);
-    </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="/paper.js"></script>
 </body>
 </html>
