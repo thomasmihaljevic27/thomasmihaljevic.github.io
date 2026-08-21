@@ -1,220 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon | Thomas Mihaljevic</title>
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2345a247'/><stop offset='50%25' stop-color='%23283c86'/><stop offset='100%25' stop-color='%23f15f2a'/></linearGradient></defs><circle cx='50' cy='50' r='50' fill='url(%23g)'/></svg>" type="image/svg+xml">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-color: #0b0c10;
-            --surface-color: #1f2833;
-            --text-primary: #ffffff;
-            --text-secondary: #c5c6c7;
-            --border-color: #333;
-            --accent-green: #45a247;
-            --accent-blue: #283c86;
-            --accent-orange: #f15f2a;
-            --main-gradient: linear-gradient(90deg, #45a247 0%, #283c86 50%, #f15f2a 100%);
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 24px;
-            width: 100%;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 0;
-            margin-bottom: 40px;
-        }
-
-        .logo-link {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: -0.02em;
-            transition: opacity 0.2s;
-        }
-        .logo-link:hover { opacity: 0.8; }
-
-        .logo-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--main-gradient);
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            margin-left: 24px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        nav a:hover { color: #fff; }
-
-        /* Construction Content */
-        .construction-box {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding-bottom: 80px;
-        }
-
-        .blockade {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite ease-in-out;
-            display: inline-block;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 { font-size: 2rem; margin-bottom: 16px; font-weight: 800; }
-        p { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 30px; }
-
-        .back-btn {
-            display: inline-block;
-            text-decoration: none;
-            color: var(--accent-green);
-            font-family: 'Fira Code', monospace;
-            border: 1px solid var(--accent-green);
-            padding: 10px 20px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        .back-btn:hover { background: var(--accent-green); color: #000; }
-
-        /* Footer */
-        footer {
-            margin-top: auto;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #555;
-            font-size: 0.9rem;
-            font-family: 'Fira Code', monospace;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .footer-social-link {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #555;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-family: 'Fira Code', monospace;
-            transition: color 0.2s;
-        }
-        .footer-social-link:hover { color: var(--text-secondary); }
-
-        @media (max-width: 600px) { 
-            header { flex-direction: column; gap: 20px; }
-            footer { flex-direction: column; gap: 15px; }
-            .footer-social { gap: 12px; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NHL Trade Market Efficiency Model — Thomas Mihaljevic</title>
+<meta name="description" content="A net-present-value framework that prices NHL players, draft picks, and prospects in one currency, used to test whether front offices trade rationally.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-    <div class="container">
-        <header>
-            <a href="/" class="logo-link">
-                <div class="logo-dot"></div>
-                THOMAS MIHALJEVIC
-            </a>
-            <nav>
-                <a href="/#work">Work</a>
-                <a href="/#about">About</a>
-                <a href="/contact/">Contact</a>
-            </nav>
-        </header>
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="name" href="/">Thomas Mihaljevic</a>
+    <nav>
+      <a href="/#experience">Experience</a>
+      <a href="/#research">Research</a>
+      <a href="/#skills" class="hide-sm">Skills</a>
+      <a href="/#contact">Contact</a>
+      <a href="/Thomas_Mihaljevic_Resume.pdf" class="cv">CV</a>
+    </nav>
+  </div>
+</div>
 
-        <div class="construction-box">
-            <div class="blockade">🚧</div>
-            <h1>Under Construction</h1>
-            <p>
-                This case study is currently being built. <br>
-                Check back soon for the full analysis and data.
-            </p>
-            <a href="/" class="back-btn">← Return Home</a>
-        </div>
+<div class="wrap">
+<main id="main">
 
-        <footer>
-            <span style="display: flex; align-items: center; gap: 8px;">
-                Thunder Bay, ON 
-                <img src="https://flagcdn.com/ca.svg" alt="Canada Flag" style="height: 14px;">
-            </span>
+  <div class="row paper-head">
+    <div class="marker">Project</div>
+    <div>
+      <a class="back" href="/#research">← Research and projects</a>
+      <h1>NHL Trade Market Efficiency Model</h1>
+      <p class="standfirst">A net-present-value framework that prices players, draft picks, and prospects in a single currency, so that any historical trade can be re-priced using only what was known on the day it was made.</p>
 
-            <span class="footer-social">
-                <a href="https://linkedin.com/in/tmihalje" target="_blank" class="footer-social-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                    LinkedIn
-                </a>
-                <a href="https://github.com/thomasmihaljevic27" target="_blank" class="footer-social-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                    </svg>
-                    GitHub
-                </a>
-            </span>
+      <dl class="paper-meta">
+        <div><dt>Type</dt><dd>Master's research project</dd></div>
+        <div><dt>Status</dt><dd>In progress</dd></div>
+        <div><dt>Tools</dt><dd>Stata, Python</dd></div>
+      </dl>
 
-            <span id="last-updated"></span>
-        </footer>
+      <div class="links">
+        <a href="https://github.com/thomasmihaljevic27">Code on GitHub</a>
+      </div>
     </div>
+  </div>
 
-    <script>
-        const date = new Date(document.lastModified);
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('last-updated').textContent = "Last updated: " + date.toLocaleDateString('en-CA', options);
-    </script>
+  <!-- THE QUESTION -->
+  <section>
+    <div class="row sec">
+      <div class="marker">The question</div>
+      <div class="prose">
+        <p>Do NHL front offices trade rationally?</p>
+        <p>The difficulty in answering that is that a trade exchanges assets of different kinds. A team might give up a forward under contract and receive a first-round pick and an unsigned prospect in return. Whether that was a good exchange is usually argued rather than measured, because a player, a pick, and a prospect have no common unit.</p>
+        <p>This project builds one. Every asset is expressed as projected surplus in dollars: the value of the production it is expected to deliver, minus what it costs against the salary cap, discounted over the relevant horizon. Once every asset carries a price in the same currency, each historical trade can be re-priced on the information available on the trade date and the model's verdict compared against what actually happened afterward. Persistent gaps between price paid and value received, concentrated in particular types of trade or particular asset classes, are evidence of systematic mispricing.</p>
+        <p>The general problem is not specific to hockey. It is how to price heterogeneous assets in a thin market where the same participants transact repeatedly and the terms of every deal are observable.</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- THE MODEL -->
+  <section>
+    <div class="row sec">
+      <div class="marker">The model</div>
+      <div class="prose">
+        <p>The player valuation model takes any NHL contract at any valuation date and returns a present value in surplus dollars. It runs in five steps.</p>
+
+        <h3>1. Measure current production</h3>
+        <p>Each valuation starts from a weighted average of the seasons preceding the valuation date, so that a single unusual year does not set the price. Seasons below a minimum games-played threshold are screened out.</p>
+
+        <h3>2. Denoise and mean-revert</h3>
+        <p>A short sample over-trusts a hot or cold stretch, so the model builds a second, independent estimate of where a player of this type and age typically sits and pulls the baseline partway toward it. That estimate comes from a comparable-player search: every qualifying player-season is profiled on how his production is distributed across even-strength offence and defence, special teams and shooting, along with his usage, level, and recent trend. Candidates are weighted continuously by similarity rather than cut to a shortlist, and the rate at which weight decays with distance is estimated from the data rather than chosen.</p>
+        <p>Matching happens at a single age rather than across whole career trajectories. Profiling full careers would admit only players whose careers lasted long enough to profile, which would pull a struggling 22-year-old toward the level of the 22-year-olds who went on to long careers. Matching at one age keeps everyone who logged a qualifying season at that age, including players out of the league three years later.</p>
+        <p>The weight given to a player's own recent form versus the comparable norm is estimated by cross-validation, not set by hand.</p>
+
+        <h3>3. Project forward on an aging curve</h3>
+        <p>Future contract seasons are projected on an age-conditional pattern built from the same weighted comparables, so a player ages on the observed trajectories of players who resembled him at his age. The curve is built from within-player season-over-season changes rather than by differencing age groups, which would be contaminated by survivorship: if weaker players leave the league by 26, the average 26-year-old looks better than any individual 25-year-old actually became, purely through who dropped out.</p>
+        <p>Graded on held-out careers against the naive alternative of holding every player flat, the curve cuts average projection error by roughly 15 percent one year out and 18 percent six years out. The margin widens with distance, because "no change" degrades the further ahead you look.</p>
+
+        <h3>4. Price end-of-contract rights</h3>
+        <p>A contract expiring into unrestricted free agency is worth nothing further to the club. One expiring into restricted free agency is, because the club keeps exclusive negotiating rights at a price set by the collective agreement rather than by open-market bidding. The model walks the projection through those controlled years and prices each against the formula in force that season.</p>
+        <p>Each controlled year is then weighted by the observed probability that a club actually extends a qualifying offer to a player of that projected quality, estimated from 1,231 real qualify-or-walk decisions. An earlier version assumed clubs retain a player whenever the projected value exceeds the cost, which caught only 18 percent of the cases where clubs actually walked away. Calibrating to observed behaviour instead materially lowers terminal values for marginal players.</p>
+
+        <h3>5. Discount to present value</h3>
+        <p>Two factors discount future seasons: the probability that the player's career ends before the season arrives, estimated by quality tier and age band, and the growth of the salary cap, which erodes the relative value of a fixed future dollar.</p>
+        <p>The discount rate deliberately excludes any allowance for managerial short-termism. Building a general manager's impatience into the model's own discount rate would make it impossible for the back-test to detect managers over-discounting the future. The rate is built from fundamentals only, so any short-termism in the data has to surface as a result.</p>
+        <p>Goaltenders run a plainer version of the same chain and are priced on a separately fitted rate, because goaltender performance persists poorly from season to season and the skater rate does not transfer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <section>
+    <div class="row sec">
+      <div class="marker">Data</div>
+      <div class="prose">
+        <p>Four sources, three of them assembled for this project.</p>
+        <ul>
+          <li><strong>Contracts and trades.</strong> A commercial contract database supplies the terms of every NHL contract, and its trade ledger covers 980 trades from 2018 through 2026, collapsing into 946 distinct trade events.</li>
+          <li><strong>Player production.</strong> Wins above replacement, from the published model maintained by Patrick Bacon at hockeystats.com.</li>
+          <li><strong>Trade-protection clauses.</strong> No-trade and no-movement status is absent from the contract database, so it was scraped from a public salary-cap reference: roughly 1,700 players and 15,261 contract-seasons, at a 97.7 percent hit rate on target players, cross-checked against a second independent source with 93.4 percent agreement and disagreements resolved by hand.</li>
+          <li><strong>A self-built game-level database.</strong> Raw play-by-play and shift data for 11,870 games from 2017-18 through 2025-26, or 427,241 player-game observations, scraped from the NHL's public API.</li>
+        </ul>
+        <p>The player model currently prices 2,909 contracts, reproduced independently on two machines.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section>
+    <div class="row sec">
+      <div class="marker">Validation</div>
+      <div class="prose">
+        <h3>The circularity problem</h3>
+        <p>Every valuation in the model is built from one wins-above-replacement measure, and the market rate converting wins into dollars is fitted on that same measure. Checking the model against anything else derived from it would only demonstrate that it agrees with itself. A real check needs a measure of on-ice performance with none of the original model's inputs in it.</p>
+
+        <h3>An independent benchmark</h3>
+        <p>So I built one. Game Value is a game-level performance score constructed from raw league play-by-play using shot quality, on-ice events, and penalties, sharing no model and no data source with the WAR measure. It was written for a separate purpose, splitting a traded player's season across his two clubs, and serves here as an outside check. Aggregated to team-seasons, it explains 58.3 percent of the variance in real goal differential, having been fitted to nothing.</p>
+        <p>Scoring the model's production baseline against what players actually did that season, measured by Game Value, gives a correlation of 0.58 across roughly 6,000 player-seasons, holding between 0.55 and 0.61 in every one of nine seasons and landing in the same band across three variants of the benchmark. Both sides are measured in wins, so the dollar conversion never touches the outcome.</p>
+        <p>This is convergent validity rather than proof that the dollar value of a win is correct, and no threshold was set after the fact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section>
+    <div class="row sec">
+      <div class="marker">Status</div>
+      <div class="prose">
+        <ul class="progress">
+          <li><span class="state">Complete</span><p>Player valuation model, covering 2,909 contracts</p></li>
+          <li><span class="state">Complete</span><p>Independent benchmark and circularity validation</p></li>
+          <li><span class="state">In progress</span><p>Draft-pick valuation: curve fitted with bootstrapped intervals, pricing of actual traded picks outstanding</p></li>
+          <li><span class="state pending">Next</span><p>Prospect valuation: league-to-NHL translation factors assembled, component not yet built</p></li>
+          <li><span class="state pending">Next</span><p>Retention and trade-clause pricing</p></li>
+          <li><span class="state pending">Next</span><p>Mid-season trade allocation, splitting a traded player's value around the trade date</p></li>
+          <li><span class="state pending">Final</span><p>The back-test: re-price every trade on information available at the time and compare against realized outcomes</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIMITATIONS -->
+  <section>
+    <div class="row sec">
+      <div class="marker">Limitations</div>
+      <div class="prose">
+        <p>Three are worth stating plainly.</p>
+        <p><strong>Selection.</strong> A trade happens only when two clubs agree, so observed trades are a selected sample and the trades that were never made cannot be observed. This is structural rather than fixable.</p>
+        <p><strong>Structural parameters.</strong> No individual player's own future ever reaches his own valuation, but the comparable bank, the aging pattern, the market rate, and the retirement-risk table are each fitted on the full panel and applied backwards. What crosses the line is a population regularity rather than player-specific information, and it is documented as such.</p>
+        <p><strong>Benchmark coverage.</strong> Agreement between the model and the independent benchmark is strong for forwards and weak for defencemen, a known limit of reading defensive play off shot and shift data.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer>tmihalje.com · Thunder Bay, Ontario</footer>
+</div>
 </body>
 </html>
