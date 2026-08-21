@@ -3,362 +3,155 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thomas Mihaljevic — Economics and Public Policy</title>
+<title>NHL Trade Market Efficiency Model — Thomas Mihaljevic</title>
+<meta name="description" content="A net-present-value framework that prices NHL players, draft picks, and prospects in one currency, used to test whether front offices trade rationally.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#FAF8F3;
-  --paper-2:#F2EDE3;
-  --ink:#2A241E;
-  --ink-2:#6B6157;
-  --ink-3:#9C9287;
-  --accent:#2F5D43;
-  --accent-pale:#E7EDE6;
-  --rule:#E3DDD1;
-
-  --serif:"Literata",Georgia,"Times New Roman",serif;
-  --label:"Archivo Narrow","Helvetica Neue",Arial,sans-serif;
-
-  --col:9rem;
-  --gutter:2.5rem;
-  --measure:36rem;
-}
-
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--serif);font-size:18px;line-height:1.62;
-  font-optical-sizing:auto;font-weight:400;
-}
-
-.wrap{max-width:62rem;margin:0 auto;padding:0 2rem}
-@media (max-width:640px){.wrap{padding:0 1.35rem}}
-
-/* Label column on the left, content on the right. No vertical rule —
-   the horizontal section rules and the whitespace carry the structure. */
-.row{display:grid;grid-template-columns:var(--col) minmax(0,1fr);gap:0 var(--gutter)}
-@media (max-width:860px){.row{grid-template-columns:1fr;gap:0}}
-.marker{
-  font-family:var(--label);font-size:.72rem;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-2);font-weight:600;padding-top:.5rem;
-}
-@media (max-width:860px){.marker{padding-top:0;margin-bottom:.75rem}}
-
-/* ---------- nav ---------- */
-.topbar{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--rule)}
-.topbar-in{max-width:62rem;margin:0 auto;padding:.85rem 2rem;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.topbar .name{font-family:var(--serif);font-weight:600;font-size:1rem;
-  text-decoration:none;color:var(--ink);letter-spacing:-.005em}
-.topbar nav{display:flex;align-items:center;gap:1.5rem;
-  font-family:var(--label);font-size:.85rem;letter-spacing:.03em}
-.topbar nav a{color:var(--ink-2);text-decoration:none;padding:.2rem 0;border-bottom:1px solid transparent}
-.topbar nav a:hover,.topbar nav a:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
-.topbar nav a.cv{color:var(--accent);border:1px solid var(--accent);border-radius:2px;padding:.3rem .75rem}
-.topbar nav a.cv:hover,.topbar nav a.cv:focus-visible{background:var(--accent);color:var(--paper)}
-@media (max-width:700px){
-  .topbar-in{padding:.7rem 1.35rem}
-  .topbar nav{gap:.95rem;font-size:.78rem}
-  .topbar nav a.hide-sm{display:none}
-}
-
-/* ---------- intro ---------- */
-.intro{padding:4.5rem 0 3.2rem}
-@media (max-width:860px){.intro{padding:2.75rem 0 2.5rem}}
-h1{font-family:var(--serif);font-weight:600;
-  font-size:clamp(2.4rem,6vw,3.6rem);line-height:1.06;
-  letter-spacing:-.022em;margin:0 0 1.1rem}
-.pitch{font-size:1.2rem;max-width:var(--measure);margin:0 0 1.1rem;line-height:1.48}
-.intro p.sub{max-width:var(--measure);color:var(--ink-2);margin:0;font-size:1.02rem}
-
-.glance{margin-top:2.4rem;border-top:1px solid var(--rule);
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:1.4rem 2.5rem;padding-top:1.5rem;max-width:44rem}
-@media (max-width:560px){.glance{grid-template-columns:1fr;gap:1.1rem}}
-.glance dt{font-family:var(--label);font-size:.7rem;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:.2rem}
-.glance dd{margin:0;font-size:.97rem;line-height:1.45}
-.glance .open{color:var(--accent);font-weight:600}
-
-/* ---------- sections ---------- */
-section{border-top:1px solid var(--rule)}
-.sec{padding:3.2rem 0 3.4rem}
-h2{font-family:var(--serif);font-weight:600;font-size:1.4rem;line-height:1.22;
-  letter-spacing:-.012em;margin:0 0 .6rem}
-.lede{max-width:var(--measure);color:var(--ink-2);margin:0 0 2.1rem;font-size:1rem}
-
-/* experience */
-.job{padding:1.7rem 0;border-top:1px solid var(--rule);max-width:46rem}
-.job:first-of-type{border-top:none;padding-top:.3rem}
-.job-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.15rem}
-.job h3{font-family:var(--serif);font-weight:600;font-size:1.1rem;line-height:1.3;margin:0;letter-spacing:-.006em}
-.job .when{font-family:var(--label);font-size:.78rem;letter-spacing:.06em;color:var(--ink-3);white-space:nowrap}
-.job .role{font-family:var(--label);font-size:.85rem;letter-spacing:.04em;color:var(--accent);margin:0 0 .6rem}
-.job ul{margin:0;padding-left:1.15rem}
-.job li{margin-bottom:.4rem;color:var(--ink-2);font-size:.98rem;line-height:1.5}
-.job li:last-child{margin-bottom:0}
-
-/* work / projects */
-.item{padding:1.9rem 0;border-top:1px solid var(--rule)}
-.item:first-of-type{border-top:none;padding-top:.4rem}
-.kicker{font-family:var(--label);font-size:.7rem;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-3);margin:0 0 .45rem}
-.item h3{font-family:var(--serif);font-weight:600;font-size:1.18rem;
-  line-height:1.32;margin:0 0 .45rem;letter-spacing:-.008em}
-.item h3 a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:1px}
-.item h3 a:hover,.item h3 a:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
-.item p{margin:0 0 .8rem;color:var(--ink-2);font-size:1rem;max-width:var(--measure)}
-.tags{display:flex;gap:.45rem;flex-wrap:wrap;margin:0 0 .8rem}
-.tags span{font-family:var(--label);font-size:.67rem;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--accent);background:var(--accent-pale);padding:.2rem .5rem}
-.links{display:flex;gap:1.3rem;flex-wrap:wrap;font-family:var(--label);font-size:.82rem}
-.links a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(47,93,67,.35);padding-bottom:1px}
-.links a:hover,.links a:focus-visible{border-bottom-color:var(--accent)}
-
-/* skills */
-.skills{display:grid;gap:1.7rem;max-width:44rem}
-.skill h3{font-family:var(--label);font-size:.72rem;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:0 0 .4rem}
-.skill p{margin:0;font-size:1rem;line-height:1.55}
-
-/* education */
-.hist{margin:0;padding:0;list-style:none;max-width:44rem}
-.hist li{display:grid;grid-template-columns:8rem minmax(0,1fr);gap:0 1.6rem;
-  padding:1.05rem 0;border-top:1px solid var(--rule)}
-.hist li:first-child{border-top:none;padding-top:.2rem}
-@media (max-width:560px){.hist li{grid-template-columns:1fr;gap:.2rem}}
-.hist .yr{font-family:var(--label);font-size:.78rem;letter-spacing:.06em;
-  color:var(--ink-3);padding-top:.3rem}
-.hist .what{margin:0;font-weight:500}
-.hist .what span{display:block;color:var(--ink-2);font-size:.95rem;font-weight:400}
-
-/* contact */
-.contact{display:flex;flex-wrap:wrap;gap:1.6rem 3rem}
-.contact .k{font-family:var(--label);font-size:.68rem;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:.2rem}
-.contact a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
-.contact a:hover,.contact a:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
-
-footer{border-top:1px solid var(--rule);padding:1.5rem 0 3rem;
-  font-family:var(--label);font-size:.76rem;color:var(--ink-3)}
-
-a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.skip{position:absolute;left:-9999px}
-.skip:focus{position:static;display:inline-block;margin:1rem 2rem;color:var(--accent)}
-</style>
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="topbar">
   <div class="topbar-in">
-    <a class="name" href="#top">Thomas Mihaljevic</a>
+    <a class="name" href="/">Thomas Mihaljevic</a>
     <nav>
-      <a href="#experience">Experience</a>
-      <a href="#research">Research</a>
-      <a href="#skills" class="hide-sm">Skills</a>
-      <a href="#contact">Contact</a>
-      <a href="#" class="cv">CV</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#research">Research</a>
+      <a href="/#skills" class="hide-sm">Skills</a>
+      <a href="/#contact">Contact</a>
+      <a href="/Thomas_Mihaljevic_Resume.pdf" class="cv">CV</a>
     </nav>
   </div>
 </div>
 
-<div class="wrap" id="top">
+<div class="wrap">
 <main id="main">
 
-  <!-- INTRO -->
-  <div class="row intro">
-    <div class="marker">Thunder Bay<br>Ontario</div>
+  <div class="row paper-head">
+    <div class="marker">Project</div>
     <div>
-      <h1>Thomas<br>Mihaljevic</h1>
-      <p class="pitch">Passionate economic policy and the data behind it, in government and in research.</p>
-      <p class="sub">MA Economics candidate at Lakehead University.</p>
+      <a class="back" href="/#research">← Research and projects</a>
+      <h1>NHL Trade Market Efficiency Model</h1>
+      <p class="standfirst">A net-present-value framework that prices players, draft picks, and prospects in a single currency, so that any historical trade can be re-priced using only what was known on the day it was made.</p>
 
-      <dl class="glance">
-        <div>
-          <dt>Currently</dt>
-          <dd>Program Administrator, Student Support Branch, Ontario Public Service.</dd>
-        </div>
-        <div>
-          <dt>Studying</dt>
-          <dd>MA Economics, Lakehead University. Completing Winter 2027.</dd>
-        </div>
-        <div>
-          <dt>Tools</dt>
-          <dd>Python, Stata, SQL, Tableau, Excel.</dd>
-        </div>
-        <div>
-          <dt>Availability</dt>
-          <dd class="open">Seeking full-time policy and research roles from Winter 2027.</dd>
-        </div>
+      <dl class="paper-meta">
+        <div><dt>Type</dt><dd>Master's research project</dd></div>
+        <div><dt>Status</dt><dd>In progress</dd></div>
+        <div><dt>Tools</dt><dd>Stata, Python</dd></div>
       </dl>
+
+      <div class="links">
+        <a href="https://github.com/thomasmihaljevic27">Code on GitHub</a>
+      </div>
     </div>
   </div>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
+  <!-- THE QUESTION -->
+  <section>
     <div class="row sec">
-      <div class="marker">Experience</div>
-      <div>
-        <h2>Where I've worked</h2>
-        <p class="lede">Public sector policy administration, healthcare finance, and tax collections, plus a stint doing engagement analysis at Reddit.</p>
-
-        <article class="job">
-          <div class="job-head">
-            <h3>Ontario Public Service</h3>
-            <span class="when">Apr 2026 – Present</span>
-          </div>
-          <p class="role">Program Administrator, Student Support Branch · Thunder Bay</p>
-          <ul>
-            <li>Adjudicate roughly 220 supporting documents per week for OSAP applications, determining eligibility under program policy and provincial student aid legislation.</li>
-            <li>Assess documentation across academic progress, disability status, SIN corrections, and bankruptcy files, verifying submissions and flagging discrepancies for correction.</li>
-            <li>Issue manual payments where system-generated funding does not process, and communicate approval and rejection decisions through the ministry portal.</li>
-          </ul>
-        </article>
-
-        <article class="job">
-          <div class="job-head">
-            <h3>Lakehead University</h3>
-            <span class="when">Sep 2025 – Apr 2026</span>
-          </div>
-          <p class="role">Graduate Assistant, Department of Economics · Thunder Bay</p>
-          <ul>
-            <li>Supported undergraduate economics courses through weekly office hours, working through microeconomic theory and quantitative methods.</li>
-            <li>Assessed assignments and exams for over 100 students per term with written feedback tied to course learning outcomes.</li>
-          </ul>
-        </article>
-
-        <article class="job">
-          <div class="job-head">
-            <h3>St. Joseph's Care Group</h3>
-            <span class="when">Sep 2022 – Aug 2025</span>
-          </div>
-          <p class="role">Business Office Clerk, Accounts Receivable · Thunder Bay</p>
-          <ul>
-            <li>Managed inpatient revenue collection averaging $400,000 per month, with accurate general ledger entry and full legislative compliance.</li>
-            <li>Reconciled Patient and Mental Health Trust accounts averaging $75,000 in balances against monthly transaction volumes of $40,000.</li>
-            <li>Analyzed healthcare policy to maintain operational compliance and prepared chronic co-payment agreements for clients and decision-makers.</li>
-          </ul>
-        </article>
-
-        <article class="job">
-          <div class="job-head">
-            <h3>Canada Revenue Agency</h3>
-            <span class="when">Jun 2021 – Sep 2021</span>
-          </div>
-          <p class="role">Collections Officer · Thunder Bay</p>
-          <ul>
-            <li>Managed over 500 taxpayer accounts, assessing legal collectability and enforcing compliance with CRA regulations.</li>
-            <li>Identified and actioned uncollectable accounts, reducing active case volume and improving team throughput.</li>
-          </ul>
-        </article>
-
-        <article class="job">
-          <div class="job-head">
-            <h3>Reddit, Inc.</h3>
-            <span class="when">Dec 2019 – Aug 2020</span>
-          </div>
-          <p class="role">Data Analyst, Contract · Remote</p>
-          <ul>
-            <li>Analyzed engagement data from more than 2,000 online communities to surface behavioural trends and inform algorithmic content recommendations.</li>
-          </ul>
-        </article>
+      <div class="marker">The question</div>
+      <div class="prose">
+        <p>Do NHL front offices trade rationally?</p>
+        <p>The difficulty in answering that is that a trade exchanges assets of different kinds. A team might give up a forward under contract and receive a first-round pick and an unsigned prospect in return. Whether that was a good exchange is usually argued rather than measured, because a player, a pick, and a prospect have no common unit.</p>
+        <p>This project builds one. Every asset is expressed as projected surplus in dollars: the value of the production it is expected to deliver, minus what it costs against the salary cap, discounted over the relevant horizon. Once every asset carries a price in the same currency, each historical trade can be re-priced on the information available on the trade date and the model's verdict compared against what actually happened afterward. Persistent gaps between price paid and value received, concentrated in particular types of trade or particular asset classes, are evidence of systematic mispricing.</p>
+        <p>The general problem is not specific to hockey. It is how to price heterogeneous assets in a thin market where the same participants transact repeatedly and the terms of every deal are observable.</p>
       </div>
     </div>
   </section>
 
-  <!-- RESEARCH -->
-  <section id="research">
+  <!-- THE MODEL -->
+  <section>
     <div class="row sec">
-      <div class="marker">Research</div>
-      <div>
-        <h2>Research and projects</h2>
-        <p class="lede">Three pieces: a valuation model, a game-theoretic account of sanctions evasion, and a supply-side argument about Canadian housing costs.</p>
+      <div class="marker">The model</div>
+      <div class="prose">
+        <p>The player valuation model takes any NHL contract at any valuation date and returns a present value in surplus dollars. It runs in five steps.</p>
 
-        <article class="item">
-          <p class="kicker">Master's research project · In progress</p>
-          <h3><a href="https://www.tmihalje.com/nhl-trade-model/">NHL Trade Market Efficiency Model</a></h3>
-          <p>Builds a valuation framework that prices players, draft picks, and prospects on a single comparable scale, weighing what a team gives up in a trade against what it gets back. Applied to completed NHL trades to identify where the market systematically misprices assets.</p>
-          <div class="tags"><span>Stata</span><span>Valuation</span><span>Analytics</span></div>
-          <div class="links"><a href="https://www.tmihalje.com/nhl-trade-model/">Read the brief</a><a href="https://github.com/thomasmihaljevic27"</a></div>
-        </article>
+        <h3>1. Measure current production</h3>
+        <p>Each valuation starts from a weighted average of the seasons preceding the valuation date, so that a single unusual year does not set the price. Seasons below a minimum games-played threshold are screened out.</p>
 
-        <article class="item">
-          <p class="kicker">Economics of Defence · 2026</p>
-          <h3><a href="https://www.tmihalje.com/economic-sanctions/">Sanctions Evasion and Economic Coercion</a></h3>
-          <p>A game-theory model of how and why third-party intermediaries help sanctioned states evade enforcement, using Russia after 2022 as a case study. Identifies the conditions under which evasion becomes rational and where enforcement can realistically deter it.</p>
-          <div class="tags"><span>Game theory</span><span>Public policy</span></div>
-          <div class="links"><a href="https://www.tmihalje.com/economic-sanctions/">Read the paper</a><a href="#"</a></div>
-        </article>
+        <h3>2. Denoise and mean-revert</h3>
+        <p>A short sample over-trusts a hot or cold stretch, so the model builds a second, independent estimate of where a player of this type and age typically sits and pulls the baseline partway toward it. That estimate comes from a comparable-player search: every qualifying player-season is profiled on how his production is distributed across even-strength offence and defence, special teams and shooting, along with his usage, level, and recent trend. Candidates are weighted continuously by similarity rather than cut to a shortlist, and the rate at which weight decays with distance is estimated from the data rather than chosen.</p>
+        <p>Matching happens at a single age rather than across whole career trajectories. Profiling full careers would admit only players whose careers lasted long enough to profile, which would pull a struggling 22-year-old toward the level of the 22-year-olds who went on to long careers. Matching at one age keeps everyone who logged a qualifying season at that age, including players out of the league three years later.</p>
+        <p>The weight given to a player's own recent form versus the comparable norm is estimated by cross-validation, not set by hand.</p>
 
-        <article class="item">
-          <p class="kicker">Public Finance, Expenditure · 2021</p>
-          <h3><a href="https://www.tmihalje.com/housing-paper/">Canadian Housing Affordability: The Case for Zoning Reform</a></h3>
-          <p>Measures the gap between home prices and construction costs across Canadian cities and attributes it to municipal building restrictions rather than land or material costs. Argues that zoning reform is the most direct lever available to policymakers on affordability.</p>
-          <div class="tags"><span>Housing</span><span>Public policy</span></div>
-          <div class="links"><a href="https://www.tmihalje.com/housing-paper/">Read the paper</a><a href="#"</a></div>
-        </article>
+        <h3>3. Project forward on an aging curve</h3>
+        <p>Future contract seasons are projected on an age-conditional pattern built from the same weighted comparables, so a player ages on the observed trajectories of players who resembled him at his age. The curve is built from within-player season-over-season changes rather than by differencing age groups, which would be contaminated by survivorship: if weaker players leave the league by 26, the average 26-year-old looks better than any individual 25-year-old actually became, purely through who dropped out.</p>
+        <p>Graded on held-out careers against the naive alternative of holding every player flat, the curve cuts average projection error by roughly 15 percent one year out and 18 percent six years out. The margin widens with distance, because "no change" degrades the further ahead you look.</p>
+
+        <h3>4. Price end-of-contract rights</h3>
+        <p>A contract expiring into unrestricted free agency is worth nothing further to the club. One expiring into restricted free agency is, because the club keeps exclusive negotiating rights at a price set by the collective agreement rather than by open-market bidding. The model walks the projection through those controlled years and prices each against the formula in force that season.</p>
+        <p>Each controlled year is then weighted by the observed probability that a club actually extends a qualifying offer to a player of that projected quality, estimated from 1,231 real qualify-or-walk decisions. An earlier version assumed clubs retain a player whenever the projected value exceeds the cost, which caught only 18 percent of the cases where clubs actually walked away. Calibrating to observed behaviour instead materially lowers terminal values for marginal players.</p>
+
+        <h3>5. Discount to present value</h3>
+        <p>Two factors discount future seasons: the probability that the player's career ends before the season arrives, estimated by quality tier and age band, and the growth of the salary cap, which erodes the relative value of a fixed future dollar.</p>
+        <p>The discount rate deliberately excludes any allowance for managerial short-termism. Building a general manager's impatience into the model's own discount rate would make it impossible for the back-test to detect managers over-discounting the future. The rate is built from fundamentals only, so any short-termism in the data has to surface as a result.</p>
+        <p>Goaltenders run a plainer version of the same chain and are priced on a separately fitted rate, because goaltender performance persists poorly from season to season and the skater rate does not transfer.</p>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section id="skills">
+  <!-- DATA -->
+  <section>
     <div class="row sec">
-      <div class="marker">Skills</div>
-      <div>
-        <h2>What I bring</h2>
-        <div class="skills">
-          <div class="skill">
-            <h3>Technical</h3>
-            <p>Python, Stata, SQL, Tableau, Microsoft Excel.</p>
-          </div>
-          <div class="skill">
-            <h3>Quantitative</h3>
-            <p>Econometrics, game theory, economic policy analysis, large dataset analysis.</p>
-          </div>
-          <div class="skill">
-            <h3>Professional</h3>
-            <p>Regulatory compliance, policy interpretation, case adjudication, financial reporting.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <div class="row sec">
-      <div class="marker">Education</div>
-      <div>
-        <h2>Education</h2>
-        <ul class="hist">
-          <li><span class="yr">Sep 2025 –</span><p class="what">Lakehead University<span>Master of Arts, Economics. Thunder Bay, Ontario.</span></p></li>
-          <li><span class="yr">2018 – 2022</span><p class="what">University of Western Ontario<span>BA, Business Management and Organizational Studies. Honours Specialization in Finance and Administration. London, Ontario.</span></p></li>
+      <div class="marker">Data</div>
+      <div class="prose">
+        <p>Four sources, three of them assembled for this project.</p>
+        <ul>
+          <li><strong>Contracts and trades.</strong> A commercial contract database supplies the terms of every NHL contract, and its trade ledger covers 980 trades from 2018 through 2026, collapsing into 946 distinct trade events.</li>
+          <li><strong>Player production.</strong> Wins above replacement, from the published model maintained by Patrick Bacon at hockeystats.com.</li>
+          <li><strong>Trade-protection clauses.</strong> No-trade and no-movement status is absent from the contract database, so it was scraped from a public salary-cap reference: roughly 1,700 players and 15,261 contract-seasons, at a 97.7 percent hit rate on target players, cross-checked against a second independent source with 93.4 percent agreement and disagreements resolved by hand.</li>
+          <li><strong>A self-built game-level database.</strong> Raw play-by-play and shift data for 11,870 games from 2017-18 through 2025-26, or 427,241 player-game observations, scraped from the NHL's public API.</li>
         </ul>
-        <div class="links" style="margin-top:1.8rem"><a href="#">Download full résumé (PDF)</a></div>
+        <p>The player model currently prices 2,909 contracts, reproduced independently on two machines.</p>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
+  <!-- VALIDATION -->
+  <section>
     <div class="row sec">
-      <div class="marker">Contact</div>
-      <div>
-        <h2>Get in touch</h2>
-        <p class="lede">Based in Thunder Bay, Ontario. Open to relocating for the right role.</p>
-        <div class="contact">
-          <div><div class="k">Email</div><a href="mailto:thomasmihaljevic27@gmail.com">thomasmihaljevic27@gmail.com</a></div>
-          <div><div class="k">Phone</div><a href="tel:+18076279824">807-627-9824</a></div>
-          <div><div class="k">LinkedIn</div><a href="https://linkedin.com/in/tmihalje">linkedin.com/in/tmihalje</a></div>
-          <div><div class="k">GitHub</div><a href="https://github.com/thomasmihaljevic27">thomasmihaljevic27</a></div>
-        </div>
+      <div class="marker">Validation</div>
+      <div class="prose">
+        <h3>The circularity problem</h3>
+        <p>Every valuation in the model is built from one wins-above-replacement measure, and the market rate converting wins into dollars is fitted on that same measure. Checking the model against anything else derived from it would only demonstrate that it agrees with itself. A real check needs a measure of on-ice performance with none of the original model's inputs in it.</p>
+
+        <h3>An independent benchmark</h3>
+        <p>So I built one. Game Value is a game-level performance score constructed from raw league play-by-play using shot quality, on-ice events, and penalties, sharing no model and no data source with the WAR measure. It was written for a separate purpose, splitting a traded player's season across his two clubs, and serves here as an outside check. Aggregated to team-seasons, it explains 58.3 percent of the variance in real goal differential, having been fitted to nothing.</p>
+        <p>Scoring the model's production baseline against what players actually did that season, measured by Game Value, gives a correlation of 0.58 across roughly 6,000 player-seasons, holding between 0.55 and 0.61 in every one of nine seasons and landing in the same band across three variants of the benchmark. Both sides are measured in wins, so the dollar conversion never touches the outcome.</p>
+        <p>This is convergent validity rather than proof that the dollar value of a win is correct, and no threshold was set after the fact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section>
+    <div class="row sec">
+      <div class="marker">Status</div>
+      <div class="prose">
+        <ul class="progress">
+          <li><span class="state">Complete</span><p>Player valuation model, covering 2,909 contracts</p></li>
+          <li><span class="state">Complete</span><p>Independent benchmark and circularity validation</p></li>
+          <li><span class="state">In progress</span><p>Draft-pick valuation: curve fitted with bootstrapped intervals, pricing of actual traded picks outstanding</p></li>
+          <li><span class="state pending">Next</span><p>Prospect valuation: league-to-NHL translation factors assembled, component not yet built</p></li>
+          <li><span class="state pending">Next</span><p>Retention and trade-clause pricing</p></li>
+          <li><span class="state pending">Next</span><p>Mid-season trade allocation, splitting a traded player's value around the trade date</p></li>
+          <li><span class="state pending">Final</span><p>The back-test: re-price every trade on information available at the time and compare against realized outcomes</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIMITATIONS -->
+  <section>
+    <div class="row sec">
+      <div class="marker">Limitations</div>
+      <div class="prose">
+        <p>Three are worth stating plainly.</p>
+        <p><strong>Selection.</strong> A trade happens only when two clubs agree, so observed trades are a selected sample and the trades that were never made cannot be observed. This is structural rather than fixable.</p>
+        <p><strong>Structural parameters.</strong> No individual player's own future ever reaches his own valuation, but the comparable bank, the aging pattern, the market rate, and the retirement-risk table are each fitted on the full panel and applied backwards. What crosses the line is a population regularity rather than player-specific information, and it is documented as such.</p>
+        <p><strong>Benchmark coverage.</strong> Agreement between the model and the independent benchmark is strong for forwards and weak for defencemen, a known limit of reading defensive play off shot and shift data.</p>
       </div>
     </div>
   </section>
